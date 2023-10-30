@@ -1,22 +1,25 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { reqResApi } from '../api/reqRes';
 import { ReqResListado, Usuario } from '../interfaces/reqRes';
 
-export const useUsuarios =  (pagina: number) => {
+export const useUsuarios =  () => {
     debugger
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+    const paginaRef = useRef(1)
 
- 
+  useEffect(() => {
+    cargarUsuarios();
+  },[])
+  
 
   const cargarUsuarios = async() => {
     const resp = await reqResApi.get<ReqResListado>('/users',{ params:{
-         page: pagina
+         page: paginaRef.current
         }
     })
 
     if(resp.data.data.length>0){
         setUsuarios(resp.data.data);
-        pagina +=1;
     }
     else{
         alert ('No hay mas registros');
@@ -24,11 +27,23 @@ export const useUsuarios =  (pagina: number) => {
     
     }
 
-   
-    
+    const paginaSiguiente =()  => {
+        paginaRef.current ++;
+        cargarUsuarios();
+    }
+
+    const paginaAnterior =()  => {
+        if(paginaRef.current > 1){
+            paginaRef.current --;
+            cargarUsuarios();
+        }
+
+    }
+
     return {
         usuarios,
-        cargarUsuarios
-    
+        paginaAnterior,
+        paginaSiguiente
+      
     }
 }

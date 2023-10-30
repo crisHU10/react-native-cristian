@@ -1,14 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { reqResApi } from "../api/reqRes"
-import { ReqResListado, Usuario } from '../interfaces/reqRes';
+import { Usuario } from '../interfaces/reqRes';
 import { useUsuarios } from '../hooks/useUsuarios';
 
 export const Usuarios = () => {
 
-
-   const {usuarios,cargarUsuarios} = useUsuarios(1);
-
-
+  const {usuarios,paginaSiguiente, paginaAnterior} = useUsuarios();
   const renderItem = ({first_name, last_name, email, avatar,id}: Usuario) =>{
 
     return(
@@ -55,7 +50,12 @@ export const Usuarios = () => {
             </tbody>
      </table>
      <button className='btn btn-primary'
-             onClick= {listarUsuarios()}>
+             onClick= {paginaAnterior}>
+        Anteriores
+     </button>
+     &nbsp;
+     <button className='btn btn-primary'
+             onClick= {paginaSiguiente}>
         Siguientes
      </button>
     </>

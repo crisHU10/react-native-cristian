@@ -1,4 +1,5 @@
 import { Usuarios } from "./components/Usuarios"
+import { Formulario } from './components/Formulario';
 
 export const App = () => {
   return (
@@ -6,7 +7,7 @@ export const App = () => {
     > <h1>
       Introduccion</h1>
       <hr/>
-      <Usuarios/>
+      <Formulario/>
     </div>
 
   )
