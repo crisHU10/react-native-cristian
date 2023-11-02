@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import { useFormulario } from '../hooks/useFormulario';
 
 export const Formulario = () => {
 
-    const [formulario, setformulario] = useState({
-        email: 'test@test.cl',
-        pasword: '123'
-    })
+
+    const {formu,onChange} = useFormulario({
+      email:'test',
+      password:'21312312'
+    });
 
   return (
     <>
@@ -13,15 +14,23 @@ export const Formulario = () => {
     <input type="text"
            className='form-control'
            placeholder='Email'
-           value={formulario.email}
+           value={formu.email}
+           onChange={({target})=>onChange(target.value,'email')}
     
     />
         <input type="text"
-           className='form-control mt-2 mb-2'
+           className='form-control mt-2 mb-a2'
            placeholder='Password'
-           value={formulario.pasword}
+           value={formu.password}
+           onChange={({target})=>onChange(target.value,'password')}
+
     
     />
+    <code>
+        <pre>
+            {JSON.stringify(formu,null,2)}
+        </pre>
+    </code>
     </>
   )
 }
